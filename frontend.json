@@ -1,0 +1,51 @@
+{
+    "Pizza Mania":[
+        {
+            "type":"model",
+            "name":"Veg. Pizza",
+            "price":150,
+            "description":"Enjoy fresh pan veg pizza with paneer, onion and capsicum toppings",
+            "model_link":"https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf",
+            "preview_image":"https://www.dominos.co.in/files/items/Peppy_Paneer.jpg",
+            "category":"Veg"
+        },
+        {
+            "type":"model",
+            "name":"Non-Veg. Pizza",
+            "price":200,
+            "description":"Enjoy fresh pan veg pizza with chicken, onion and capsicum toppings",
+            "model_link":"https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf",
+            "preview_image":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
+            "category":"Non-Veg"
+        },
+        {
+            "type":"model",
+            "name":"Farmhouse Pizza",
+            "price":250,
+            "description":"Check out this mouth watering overload of crunchy, crisp capsicum, succulent mushrooms and fresh tomatoes",
+            "model_link":"https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf",
+            "preview_image":"https://www.dominos.co.in//files/items/Farmhouse.jpg",
+            "category":"Veg"
+        }
+    ],
+    "Burger Mania":[
+        {
+            "type":"model",
+            "name":"Veg. Burger",
+            "price":150,
+            "description":"Enjoy fresh pan veg pizza with paneer, onion and capsicum toppings",
+            "model_link":"https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf",
+            "preview_image":"https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Big-Mac-1:1-3-product-tile-desktop",
+            "category":"Veg"
+        },
+        {
+            "type":"model",
+            "name":"Double Patty Burger",
+            "price":200,
+            "description":"First, there's the Double Quarter Pounder with Cheese (QPC). Now, there's still the Double QPC—but with smoky sauce and bacon.",
+            "model_link":"https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf",
+            "preview_image":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
+            "category":"Non-Veg"
+        }   
+    ]
+}

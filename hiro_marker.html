@@ -1,0 +1,1251 @@
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <script src="js/aframe.min.js"></script>
+    <script src="js/arframe-ar.js"></script>
+    <script src="js/aframe-extras.loaders.min.js"></script>
+    <!-- <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script> -->
+    <!-- <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+    <script src="https://raw.githack.com/jeromeetienne/AR.js/2.0.8/aframe/build/aframe-ar.js"></script> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+    <title> Multi Markers AR</title>
+    <meta name="description" content="Multi Markers AR">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no," />
+
+    <style>
+
+        body{
+            font-family: "Roboto", sans-serif;
+        }
+
+        .group-text{
+            display: flex;
+            justify-content: space-between;
+
+            font-size: larger;
+            margin-top: 10px;
+            
+            box-shadow: 0px 5px 5px 4px whitesmoke;
+            padding: 7.5px;
+            border-radius: 5px;
+
+            background: black;
+            color: white;
+        }
+
+        .group-text .material-icons{
+            transition: 0.3s;
+            transform: rotate(-180deg);
+        }
+
+        #back-to-menu{
+            z-index: 10;
+            position: absolute;
+            left: 0px;
+            margin-top: 10px;
+
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+
+            text-indent: 5px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        
+            transition: 0.7s;
+        }
+
+        .single-option{
+            display: flex;
+            justify-content: space-between;
+            /* height: 75px; */
+
+            margin-top: 15px;
+            padding-bottom: 10px;
+
+            border-bottom: 1px solid gray;
+        }
+
+        .panel{
+            display: block;
+            transition: 0.5s;
+        }
+
+        .single-option-info{
+
+
+            padding-left: 20px;
+            padding-right: 10px;
+
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #menu-bar{
+            height:45px; 
+            align-items: center;
+            display:flex; 
+            
+            padding: 10px;
+            margin-left: 5px;
+            justify-content: flex-start;
+        }
+
+        .menu-option-img{
+            height: 75px;
+            width: 75px;
+            border-radius: 20%;
+
+            object-fit: cover;
+
+        }
+
+        .menu-list{
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 15px;
+            
+        }
+
+        .menu-slider{
+            z-index: 20;
+            position: absolute;
+            background-color: white;
+            width: 100%;
+            height: 90%;
+            bottom: 0px;
+            left: 0px;
+
+            border-radius: 0px 0px 0px 0px;
+            transition: 0.5s ease;
+
+            overflow: auto;
+
+        }
+
+        .nav-header{
+            z-index: 20;
+            position: absolute;
+            background-color: black;
+            width: 100%;
+            height: 10%;
+            top: 0px;
+            left: 0px;
+
+            border-radius: 0px 0px 0px 0px;
+            transition: 0.5s ease;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-header img{
+            height: 80%;
+        }
+
+        .single-option-info-title{
+            display: flex; 
+            align-items: center;
+            font-weight: 600;
+            font-size: large;
+
+            overflow-wrap: anywhere;
+            max-width: 50vw;
+        }
+
+        .single-option-info-price{
+            padding-top: 10px;
+        }
+
+        .single-option-veg-nonveg-img{
+            height: 15px;
+            width: 15px;
+
+            padding-left: 5px;
+        }
+
+        .single-option-add-to-cart{
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+
+            padding-right: 10px;
+        }
+
+        .single-option-add-to-cart > div{
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            font-size: medium;
+
+            border: 2px solid green;
+            padding: 5px;
+            color: green;
+            border-radius: 10px;
+
+            width: 60px;
+            transition: 0.5s;
+        }
+
+        .single-option-add-to-cart span.material-icons {
+            font-size: 20px;
+        }
+
+        .qty_remove_icon{
+            display: none;
+        }
+
+        .single-option-info-with-img{
+            display: flex;
+            transition: 0.4s;
+        }
+        
+        
+        #ar-view-info{
+            z-index: 10;
+            position: absolute;
+            left: 0px;
+            bottom: 0px;
+            margin-bottom: 0px;
+            width: 100%;
+
+            display: flex;
+            justify-content: center;
+
+            transition: 0.7s;
+            
+        }
+
+        #ar-view-info-card{
+            width: 100%;
+            background-color: white;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+
+            max-height: 220px;
+            min-height: 170px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #ar-view-preview-image{
+            border-top-right-radius: 30px;
+            object-fit: cover;
+            width: 150px;
+        }
+
+        #ar-view-info-text{
+            padding-top: 20px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-bottom: 10px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        #ar-view-info-title{
+            font-size: 20px;
+            font-weight: bold;
+            padding-bottom: 2.5px;
+        }
+        #ar-view-info-veg-nonveg-img{
+            height: 15px;
+            width: 15px;
+            
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        #ar-view-info-desc{
+            font-size: 12px;
+            padding-bottom: 10px;
+        }
+        #ar-view-info-price{
+            display: flex;
+            font-size: 18px;
+            align-items: center;
+        }
+        #ar-view-info-price-button{
+            display: flex;
+            justify-content: space-between;
+        }
+        .qty_btn{
+            display: flex;
+            align-items: center;
+            font-size: medium;
+            border: 2px solid green;
+            padding: 5px;
+            color: green;
+
+            font-size: 18px;
+            border-radius: 10px;
+            margin-right: 5px;
+        }
+
+        .floating_shopping_cart{
+            z-index: 20;
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            width: fit-content;
+            display: flex;
+
+            transition: 0.7s;
+        }
+
+        .floating_shopping_cart .place_order{
+            margin: 10px;
+            margin-right: 0px;
+            padding: 15px;
+            color: white;
+            background-color: black;
+
+            display: flex;
+            align-items: center;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+        .place_order_text{
+            margin-left: 5px;
+            
+        }
+
+        .close_cart_icon{
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            bottom: 0px;
+            margin-bottom: 20px;
+        }
+
+        .close_cart_icon .material-icons{
+            background-color: white;
+            font-size: 36px;
+            border-radius: 50%;
+            padding: 10px;
+
+            box-shadow: 0px 0px 20px 7px grey;
+        }
+
+        .cart_main{
+            z-index: 20;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+
+            background-color: rgba(0,0,0,0.5);
+
+            width: 100%;
+            height: 100%;
+
+            display: none;
+            transition: 0.7s;
+        }
+
+
+        .cart_header{
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 30%;
+        }
+
+        .cart_body{
+            overflow: auto;
+            position: fixed;
+            bottom: -70%;
+            height: 70%;
+            width: 100%;
+
+            background-color: white;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: 0.7s;
+        }
+
+        .cart_list{
+            padding: 15px;
+        }
+
+        .cart-single-option-info {
+            padding-left: 20px;
+            padding-right: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .cart-single-option-category{
+            padding-top: 2px;
+            padding-bottom: 2px;
+
+            font-style: italic;
+            color: grey;
+        }
+
+        .cart-single-option-add-to-cart{
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-single-option-add-to-cart > div {
+            display: flex;
+            align-items: center;
+            font-size: medium;
+
+            border: 2px solid gray;
+            padding: 5px;
+            color: gray;
+            border-radius: 10px;
+            width: fit-content;
+        }
+
+        .cart-single-option-price{
+            padding-top: 10px; 
+            font-size: x-large; 
+            font-weight: bold;
+        }
+
+        .order-button{
+            width: 100%;
+        }
+        .order-text{
+            background-color: green;
+            color: white;
+            margin: 10px;
+            padding: 15px;
+            margin-left: 20px;
+            border-radius: 10px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .order-summary{
+            display: flex;
+            justify-content: flex-end; 
+            align-items: center; 
+            padding-top:15px; 
+            padding-right: 15px;
+        }
+
+        .disabled{
+            background-color: grey;
+            pointer-events: none;
+        }
+    </style>
+
+
+    <script>
+        var items=[
+                {
+                    "id":"id1",
+                    "type":"model",
+                    "name":"Veg. Pizza",
+                    "price":150,
+                    "category":"Pizza Mania",
+                    "description":"Enjoy fresh pan veg pizza with paneer, onion and capsicum toppings",
+                    "model_link":"resources/models/hotdog2.glb",
+                    "preview_image":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
+                    "food_category":"veg",
+                    "ar_enabled":true
+                },
+                {
+                    "id":"id2",
+                    "type":"model",
+                    "name":"Non-Veg. Pizza",
+                    "price":200,
+                    "category":"Pizza Mania",
+                    "description":"Enjoy fresh pan veg pizza with chicken, onion and capsicum toppings",
+                    "model_link":"resources/models/fried_egg_sandwich2.glb",
+                    "preview_image":"https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGl6emF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+                    "food_category":"non_veg",
+                    "ar_enabled":true
+                },
+                {
+                    "id":"id3",
+                    "type":"model",
+                    "name":"Farmhouse Pizza",
+                    "price":250,
+                    "category":"Pizza Mania",
+                    "description":"Check out this mouth watering overload of crunchy, crisp capsicum, succulent mushrooms and fresh tomatoes",
+                    "model_link":"resources/models/turkey_sandwich2.glb",
+                    "preview_image":"https://www.dominos.co.in//files/items/Farmhouse.jpg",
+                    "food_category":"veg",
+                    "ar_enabled":false
+                },
+                {
+                    "id":"id4",
+                    "type":"model",
+                    "name":"Veg. Burger",
+                    "price":150,
+                    "category":"Burger Mania",
+                    "description":"Enjoy fresh pan veg pizza with paneer, onion and capsicum toppings",
+                    "model_link":"resources/models/hotdog2.glb",
+                    "preview_image":"https://images.unsplash.com/photo-1550547660-d9450f859349",
+                    "food_category":"veg",
+                    "ar_enabled":true
+                },
+                {
+                    "id":"id5",
+                    "type":"model",
+                    "name":"Double Patty Burger",
+                    "price":200,
+                    "category":"Burger Mania",
+                    "description":"First, there's the Double Quarter Pounder with Cheese (QPC). Now, there's still the Double QPC—but with smoky sauce and bacon.",
+                    "model_link":"resources/models/fried_egg_sandwich2.glb",
+                    "preview_image":"https://images.unsplash.com/photo-1603064752734-4c48eff53d05",
+                    "food_category":"non_veg",
+                    "ar_enabled":false
+                },
+                {
+                    "id":"id6",
+                    "type":"model",
+                    "name":"Spring Roll",
+                    "price":210,
+                    "category":"Chinese",
+                    "description":"Spring rolls are rolled appetizers or dim sum commonly found in Chinese and other Southeast Asian cuisines.",
+                    "model_link":"resources/models/hotdog2.glb",
+                    "preview_image":"https://productimages.withfloats.com/actual/624038417e882f0001e2fba6.jpg",
+                    "food_category":"veg",
+                    "ar_enabled":false
+                },
+                {
+                    "id":"id7",
+                    "type":"model",
+                    "name":"Dumplings",
+                    "price":270,
+                    "category":"Chinese",
+                    "description":"First, there's the Double Quarter Pounder with Cheese (QPC). Now, there's still the Double QPC—but with smoky sauce and bacon.",
+                    "model_link":"resources/models/fried_egg_sandwich2.glb",
+                    "preview_image":"https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Xiaolongbao-breakfast.jpg/640px-Xiaolongbao-breakfast.jpg",
+                    "food_category":"non_veg",
+                    "ar_enabled":false
+                }, 
+        ];
+        var data = {
+            "Pizza Mania":[
+                {
+                    "id":"id1",
+                    "type":"model",
+                    "name":"Veg. Pizza",
+                    "price":150,
+                    "category":"Pizza Mania",
+                    "description":"Enjoy fresh pan veg pizza with paneer, onion and capsicum toppings",
+                    "model_link":"resources/models/hotdog2.glb",
+                    "preview_image":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
+                    "food_category":"veg",
+                    "ar_enabled":true
+                },
+                {
+                    "id":"id2",
+                    "type":"model",
+                    "name":"Non-Veg. Pizza",
+                    "price":200,
+                    "category":"Pizza Mania",
+                    "description":"Enjoy fresh pan veg pizza with chicken, onion and capsicum toppings",
+                    "model_link":"resources/models/fried_egg_sandwich2.glb",
+                    "preview_image":"https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGl6emF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+                    "food_category":"non_veg",
+                    "ar_enabled":true
+                },
+                {
+                    "id":"id3",
+                    "type":"model",
+                    "name":"Farmhouse Pizza",
+                    "price":250,
+                    "category":"Pizza Mania",
+                    "description":"Check out this mouth watering overload of crunchy, crisp capsicum, succulent mushrooms and fresh tomatoes",
+                    "model_link":"resources/models/turkey_sandwich2.glb",
+                    "preview_image":"https://www.dominos.co.in//files/items/Farmhouse.jpg",
+                    "food_category":"veg",
+                    "ar_enabled":false
+                },
+            ],
+            "Burger Mania":[
+                {
+                    "id":"id4",
+                    "type":"model",
+                    "name":"Veg. Burger",
+                    "price":150,
+                    "category":"Burger Mania",
+                    "description":"Enjoy fresh pan veg pizza with paneer, onion and capsicum toppings",
+                    "model_link":"resources/models/hotdog2.glb",
+                    "preview_image":"https://images.unsplash.com/photo-1550547660-d9450f859349",
+                    "food_category":"veg",
+                    "ar_enabled":true
+                },
+                {
+                    "id":"id5",
+                    "type":"model",
+                    "name":"Double Patty Burger",
+                    "price":200,
+                    "category":"Burger Mania",
+                    "description":"First, there's the Double Quarter Pounder with Cheese (QPC). Now, there's still the Double QPC—but with smoky sauce and bacon.",
+                    "model_link":"resources/models/fried_egg_sandwich2.glb",
+                    "preview_image":"https://images.unsplash.com/photo-1603064752734-4c48eff53d05",
+                    "food_category":"non_veg",
+                    "ar_enabled":false
+                },
+            ],
+            "Chinese":[
+                {
+                    "id":"id6",
+                    "type":"model",
+                    "name":"Spring Roll",
+                    "price":210,
+                    "category":"Chinese",
+                    "description":"Spring rolls are rolled appetizers or dim sum commonly found in Chinese and other Southeast Asian cuisines.",
+                    "model_link":"resources/models/hotdog2.glb",
+                    "preview_image":"https://productimages.withfloats.com/actual/624038417e882f0001e2fba6.jpg",
+                    "food_category":"veg",
+                    "ar_enabled":false
+                },
+                {
+                    "id":"id7",
+                    "type":"model",
+                    "name":"Dumplings",
+                    "price":270,
+                    "category":"Chinese",
+                    "description":"First, there's the Double Quarter Pounder with Cheese (QPC). Now, there's still the Double QPC—but with smoky sauce and bacon.",
+                    "model_link":"resources/models/fried_egg_sandwich2.glb",
+                    "preview_image":"https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Xiaolongbao-breakfast.jpg/640px-Xiaolongbao-breakfast.jpg",
+                    "food_category":"non_veg",
+                    "ar_enabled":false
+                },
+            ]
+        }
+        var nav_closed = false;
+        var selected_item_name="Veg. Pizza";
+        var selected_item_group="Pizza";
+        var selected_item_price="₹150";
+        var cart={};
+
+        window.onload = function() {
+            //Load Menu
+            
+            // document.getElementById('menu-list-id').appendChild(getMenuUICardItem(data['Pizza Mania'][2]));
+            getAccordionGroupItem('Pizza Mania');
+            for (const group in data) {
+                if (Object.hasOwnProperty.call(data, group)) {
+                    const menu_elements = data[group];
+                    document.getElementById('menu-list-id').appendChild(getAccordionGroupItem(group));
+                }
+            }
+
+            // getCartUICardItem(data["Burger Mania"][0]);
+            // getCartUICardItem(data["Burger Mania"][1]);
+
+            // var menu_slider = document.getElementById("menu-slider-id");
+            // for(const key in data){
+            //     let item_arr=data[key];
+            //     const group_text_div=document.createElement('div');
+            //     group_text_div.innerText=key;
+            //     group_text_div.className="group-text";
+            //     menu_slider.appendChild(group_text_div);
+            //     for(var i=0;i<item_arr.length;i++){
+            //         console.log(item_arr[i]);
+            //     }
+            // }
+
+            //Accordion and Panels
+            var ar_view_info_height=parseInt(document.getElementById("ar-view-info").offsetHeight);
+            var back_to_menu_width=parseInt(document.getElementById("back-to-menu").offsetWidth);
+            document.getElementById("ar-view-info").style.transform = "translateY("+parseInt(ar_view_info_height)+"px)";
+            document.getElementById("back-to-menu").style.transform = "translateX(-"+parseInt(back_to_menu_width)+"px)";
+
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                /* Toggle between hiding and showing the active panel */
+                
+                var panel = this.nextElementSibling;
+                // console.log("Display: ",panel.style.display);
+                if (panel.style.display === "block" || panel.style.display==="" ) {
+                    panel.style.display = "none";
+                    this.getElementsByClassName('material-icons')[0].style.transform="rotate(0deg)";
+                } else {
+                    panel.style.display = "block";
+                    this.getElementsByClassName('material-icons')[0].style.transform="rotate(-180deg)";
+                }
+            });
+            }
+
+
+        }
+
+
+        AFRAME.registerComponent('registerevents', {
+            init: function () {
+                const marker = this.el;
+
+                marker.addEventListener("markerFound", () => {
+                    console.log("Found!!");
+                    document.querySelector("#Model").emit('popup', null, false);
+                });
+
+                marker.addEventListener("markerLost", () => {
+                    var markerId = marker.id;
+                    console.log('Marker Lost: ', markerId);
+                    document.querySelector("#Model").emit('popout', null, false);
+                }); 
+            },
+        });
+
+        // function image_clicked(selected_index,model_url,type){
+        //     const marker = document.getElementById('option-picker');
+        //     console.log(selected_index,model_url,marker.children[selected_index]);
+        //     for (let index = 0; index < marker.childElementCount; index++) {
+        //         if(index===selected_index){
+        //             marker.children[selected_index].style="height:fit-content; margin-left: 12px; margin-right: 12px; border: 3px solid white; border-radius: 20px;";
+        //         }
+        //         else{
+        //             marker.children[index].style="height:fit-content; margin-left: 10px; margin-right: 10px; border: 0px;";
+        //         }
+        //     }
+        //     if(type=="video"){
+        //         document.getElementById("Video").setAttribute('src',model_url);
+        //         document.getElementById("Video").setAttribute('opacity',1);
+
+        //         document.getElementById("Model").setAttribute('scale',"0 0 0");
+        //     }
+        //     else{
+        //         document.getElementById("Model").setAttribute('gltf-model',model_url);
+        //         document.getElementById("Model").setAttribute('scale',"0.5 0.5 0.5");
+        //         document.getElementById("Video").setAttribute('opacity',0);
+        //     }
+        // }
+
+        function openMenu() {
+            // console.log("In Open");
+            nav_closed = false;
+            document.getElementById("menu-slider-id").style.transform = "unset";
+            document.getElementById("nav-header-id").style.transform = "unset";
+            document.getElementById("floating_shopping_cart_id").style.transform = "unset";
+
+            
+            var ar_view_info_height=parseInt(document.getElementById("ar-view-info").offsetHeight);
+            var back_to_menu_width=parseInt(document.getElementById("back-to-menu").offsetWidth);
+            
+            document.getElementById("ar-view-info").style.transform = "translateY("+parseInt(ar_view_info_height)+"px)";
+            document.getElementById("back-to-menu").style.transform = "translateX(-"+parseInt(back_to_menu_width)+"px)";
+            document.getElementById("menu-bar").setAttribute('onClick', "closeMenu()");
+
+        }
+
+        function closeMenu() {
+            // console.log("In Close");
+            nav_closed = true;
+            var menubar_height=parseInt((document.getElementById("menu-bar").offsetHeight));
+            var nav_header_height=parseInt((document.getElementById("nav-header-id").offsetHeight));
+            var view_cart_width=parseInt((document.getElementById("floating_shopping_cart_id").offsetWidth));
+            
+            document.getElementById("menu-slider-id").style.transform = "translateY("+parseInt(window.innerHeight)+"px)";
+            document.getElementById("nav-header-id").style.transform = "translateY(-"+parseInt(nav_header_height)+"px)";
+            document.getElementById("floating_shopping_cart_id").style.transform = "translateX("+parseInt(view_cart_width)+"px)";
+            document.getElementById("ar-view-info").style.transform = "unset";
+            document.getElementById("back-to-menu").style.transform = "unset";
+            document.getElementById("menu-bar").setAttribute('onClick', "openMenu()");
+        }
+
+        function openNonArView(){
+            document.getElementById("ar-view-info").style.zIndex = 25;//10
+            // document.getElementById("back-to-menu").style.zIndex = "unset";
+            
+            // document.getElementById("back-to-menu").style.transform = "unset";
+
+            document.getElementById("cart_main_id").style.display = "unset";
+            document.getElementById("cart_header_id").style.height="70%";
+            document.getElementById("cart_header_id").style.display="flex";
+            setTimeout(()=>{
+                document.getElementById("ar-view-info").style.transform = "unset";
+                document.getElementById("cart_main_id").style.backgroundColor="rgba(0,0,0,0.5)";
+                document.getElementById("cart_header_id").setAttribute('onClick', "closeNonArView()");
+            },100);
+
+        }
+
+        function closeNonArView(){
+            
+            var ar_view_info_height=parseInt(document.getElementById("ar-view-info").offsetHeight);
+            document.getElementById("ar-view-info").style.transform = "translateY("+parseInt(ar_view_info_height)+"px)";
+
+
+            document.getElementById("cart_main_id").style.backgroundColor="rgba(0,0,0,0)";
+            document.getElementById("cart_header_id").style.display="none";
+            document.getElementById("cart_header_id").style.height="30%";
+            setTimeout(()=>{
+                document.getElementById("ar-view-info").style.zIndex = 10;
+                document.getElementById("cart_main_id").style.display = "none";
+                document.getElementById("cart_header_id").setAttribute('onClick', "closeCart()");
+            },550);
+
+        }
+
+        function openCart(){
+            updateCartItemsUI();
+            document.getElementById("cart_main_id").style.display = "unset";
+            
+            setTimeout(()=>{
+                document.getElementById("cart_header_id").style.display="flex";
+                document.getElementById("cart_main_id").style.backgroundColor="rgba(0,0,0,0.5)";
+                document.getElementById("cart_body_id").style.bottom = "0px";
+            },100);
+            
+            
+        }
+
+        function closeCart(){
+            document.getElementById("cart_body_id").style.bottom = "-70%";
+            document.getElementById("cart_main_id").style.backgroundColor="rgba(0,0,0,0)";
+            document.getElementById("cart_header_id").style.display="none";
+            setTimeout(()=>{
+                document.getElementById("cart_main_id").style.display = "none";
+            },750);
+        }
+
+        function getCartItemsList(){
+            var cart_item_list=[];
+            for (const menu_id in cart) {
+                if (Object.hasOwnProperty.call(cart, menu_id)) {
+                    const element = cart[menu_id];
+                    items.forEach(item => {
+                        if(item.id===menu_id){
+                            cart_item_list.push(item);
+                        }
+                    });
+                }
+            }
+            return cart_item_list;
+        }
+
+        function updateCartItemsUI(){
+            console.log("Cart Updating");
+            document.getElementById('cart_list_id').innerHTML="";
+            var cart_item_list=getCartItemsList();
+            console.log("Cart Item List:",cart_item_list);
+            cart_item_list.forEach(item =>{
+                // console.log(item);
+                document.getElementById('cart_list_id').appendChild(getCartUICardItem(item));
+                try {
+                    cart[item.id]['price']=item['price'];
+                } catch (error) {
+                    console.log("Failed to update price in Cart");
+                }
+            });
+            var total_items=0;
+            var total_price=0;
+            for (const menu_id in cart) {
+                if (Object.hasOwnProperty.call(cart, menu_id)) {
+                    const menu_item = cart[menu_id];
+                    try {
+                        total_items+=menu_item['qty'];
+                    } catch (error) {console.log(error)}
+                    
+                    try {
+                        total_price+=menu_item['price']*menu_item['qty'];
+                    } catch (error) {console.log(error);}
+                    
+                }
+            }
+            document.getElementById('cart_item_number_id').innerText=total_items+" item(s)";
+            if(total_items===0){
+                document.getElementById('cart_list_id').innerText="No items are added to the cart";
+                document.getElementById('cart_total_price_id').innerText='';
+                document.getElementById('place-order-button-id').className+=' disabled';
+            }
+            else{
+                document.getElementById('cart_total_price_id').innerText='₹'+total_price;
+                document.getElementById('place-order-button-id').className='order-text';
+                
+            }
+            
+            console.log("Cart: ",cart);
+        }
+
+        function view_ar(menu_item){
+            document.getElementById('ar-view-info-title').innerText=menu_item.name;
+            document.getElementById('ar-view-info-desc').innerText=menu_item.description;
+            document.getElementById('ar-view-info-price').innerText="₹"+menu_item.price;
+            document.getElementById('ar-view-preview-image').src=menu_item.preview_image;
+
+            ar_qty_btn=document.getElementById('ar-view-info-button').children[0];
+            // console.log("AR Qty Btn: ",ar_qty_btn);
+            ar_qty_btn.children[0].replaceWith(ar_qty_btn.children[0].cloneNode(true));
+            ar_qty_btn.children[1].replaceWith(ar_qty_btn.children[1].cloneNode(true));
+            ar_qty_btn.children[2].replaceWith(ar_qty_btn.children[2].cloneNode(true));
+
+            ar_qty_btn.children[0].addEventListener('click',function(){remove_quantity(menu_item.id);});
+            ar_qty_btn.children[1].addEventListener('click',function(){add_quantity(menu_item.id);});
+            ar_qty_btn.children[2].addEventListener('click',function(){add_quantity(menu_item.id);});
+            if(menu_item.id in cart){
+                ar_qty_btn.children[1].innerText=cart[menu_item.id]['qty'];
+                if(cart[menu_item.id]['qty']>0){
+                    ar_qty_btn.children[0].style.display="block";
+                }
+                else{
+                    ar_qty_btn.children[0].style.display="none";
+                    ar_qty_btn.children[1].innerText="Add";
+                }
+            }
+            else{
+                ar_qty_btn.children[1].innerText="Add";
+                ar_qty_btn.children[0].style.display="none";
+            }
+            
+            ar_qty_btn.id="qty_"+menu_item.id;
+
+            document.getElementById("Model").setAttribute('gltf-model',menu_item.model_link);
+            if(menu_item.food_category==="veg"){
+                document.getElementById('ar-view-info-veg-nonveg-img').src="/resources/images/veg_symbol.png";
+            }
+            else{
+                document.getElementById('ar-view-info-veg-nonveg-img').src="/resources/images/non_veg_symbol.png";
+            }
+            console.log("Menu Clicked: ",menu_item);
+            if(menu_item.ar_enabled){
+                setTimeout(closeMenu(),100);
+            }
+            else{
+                openNonArView();
+            }
+        }
+
+        function getMenuUICardItem(menu_item){
+            var root=document.createElement('div');
+            root.className="single-option";
+
+            //This is Menu Item UI
+
+            root.innerHTML=`
+            <div class="single-option-info-with-img" id="single-option-info-with-img-id">
+                <img class="menu-option-img" src="${menu_item.preview_image}">
+                <div class="single-option-info">
+                    <div class="single-option-info-title">
+                        <div>${menu_item.name}</div>
+                        <img class="single-option-veg-nonveg-img" src="./resources/images/${menu_item.food_category}_symbol.png">
+                        <span class="material-icons">${menu_item.ar_enabled?'view_in_ar':''}</span>
+                    </div>
+                    <div class="single-option-info-price">₹${menu_item.price}</div>
+                </div>
+            </div>
+            <div class="single-option-add-to-cart">
+                <div class="qty_btn" id="qty_${menu_item.id}">
+                    <span class="material-icons qty_remove_icon" id="remove_btn_id">remove</span>
+                    <div class="qty_text" id="add_btn_txt_id">Add</div>
+                    <span class="material-icons" id="add_btn_id">add</span>
+                </div>
+            </div>`;
+            
+            root.querySelector('#single-option-info-with-img-id').addEventListener('click',function(){view_ar(menu_item);});
+            root.querySelector('#remove_btn_id').addEventListener('click',function(){remove_quantity(menu_item.id);});
+            root.querySelector('#add_btn_txt_id').addEventListener('click',function(){add_quantity(menu_item.id);});
+            root.querySelector('#add_btn_id').addEventListener('click',function(){add_quantity(menu_item.id);});
+            // console.log(root.innerHTML);
+            return root;
+        }
+
+        function getCartUICardItem(menu_item){
+
+            //This is Cart Item UI
+
+            var root=document.createElement('div');
+            root.className="single-option";
+            root.id="cart_item_"+menu_item.id;
+            var item_quantity=0;
+            if(menu_item.id in cart){
+                item_quantity=cart[menu_item.id]['qty'];
+            }
+            // console.log(item_quantity);
+
+            root.innerHTML=`
+            <div class="single-option-info-with-img" id="single-option-info-with-img-id">
+                <img class="menu-option-img" src="${menu_item.preview_image}">
+                <div class="cart-single-option-info">
+                    <div class="single-option-info-title">
+                        <div>${menu_item.name}</div>
+                        <img class="single-option-veg-nonveg-img" src="./resources/images/${menu_item.food_category}_symbol.png">
+                    </div>
+                    <div class="cart-single-option-category">${menu_item.category}</div>
+                    <div class="cart-single-option-add-to-cart">
+                        <div class="qty_btn" id="qty_${menu_item.id}">
+                            <span class="material-icons" id="remove_btn_id">remove</span>
+                            <div class="qty_text" id="add_btn_txt_id">${item_quantity>0?item_quantity:'Add'}</div>
+                            <span class="material-icons" id="add_btn_id">add</span>
+                        </div>
+                        <span class="material-symbols-outlined" id="delete_btn_id">delete</span>
+                    </div>
+                </div>
+            </div>
+            <div class="cart-single-option-price">₹${menu_item.price}</div>`;
+            
+            // root.querySelector('#single-option-info-with-img-id').addEventListener('click',function(){view_ar(menu_item);});
+            root.querySelector('#remove_btn_id').addEventListener('click',function(){remove_quantity(menu_item.id);});
+            root.querySelector('#add_btn_txt_id').addEventListener('click',function(){add_quantity(menu_item.id);});
+            root.querySelector('#add_btn_id').addEventListener('click',function(){add_quantity(menu_item.id);});
+            root.querySelector('#delete_btn_id').addEventListener('click',function(){remove_item_from_cart(menu_item.id);});
+            // console.log(root.innerHTML);
+            // document.getElementById('cart_list_id').appendChild(root);
+            return root;
+        }
+
+        function getAccordionGroupItem(name){
+            var root=document.createElement('div');
+            
+            root.innerHTML=`
+            <div class="group-text accordion">
+                <div></div>
+                <div>${name}</div>
+                <span class="material-icons">expand_more</span>
+            </div>
+            <div class="panel" id="panel-id"></div>
+            `;
+            data[name].forEach(menu_item => {
+                root.querySelector('#panel-id').appendChild(getMenuUICardItem(menu_item));
+            });
+            
+            // console.log(root.innerHTML);
+            //document.getElementById('menu-list-id').appendChild(root);
+            return root;
+        }
+
+        function add_quantity(id){
+            if(id in cart){
+                cart[id]['qty']=cart[id]['qty']+1;
+            }
+            else{
+                cart[id]={"qty":1};
+            }
+
+            update_quantity_ui(id,cart[id]['qty']);
+        }
+
+        function remove_quantity(id){
+            if(id in cart){
+                if(cart[id]['qty']==0){
+                    return;
+                }
+                cart[id]['qty']=cart[id]['qty']-1;
+            }
+            else{
+                return;
+            }
+
+            if(cart[id]['qty']==0){
+                delete cart[id];
+                update_quantity_ui(id,0);
+            }
+            else{
+                update_quantity_ui(id,cart[id]['qty']);
+            }
+            
+        }
+
+        function remove_item_from_cart(id){
+            if(id in cart){
+                if(cart[id]['qty']==0){
+                    return;
+                }
+                delete cart[id];
+            }
+            else{
+                return;
+            }
+            // console.log(cart);
+
+            update_quantity_ui(id,0);
+        }
+
+        function update_quantity_ui(id,new_qty){
+            var qty_uis=document.querySelectorAll("#qty_"+id);
+            for (let i = 0; i < qty_uis.length; i++) {
+                const qty_ui = qty_uis[i];
+                if(new_qty==0){
+                    qty_ui.children[0].style.display="none";
+                    qty_ui.children[1].innerText="Add";
+                }
+                else if(new_qty==1){
+                    qty_ui.children[0].style.display='block';
+                    qty_ui.children[1].innerText=new_qty;
+                }
+                else{
+                    qty_ui.children[1].innerText=new_qty;
+                }   
+            }
+
+            var cart_qty_ui=document.querySelector("#cart_item_"+id);
+            if(cart_qty_ui && new_qty==0){
+                cart_qty_ui.style.display="none";
+            }
+
+            var total_items=0;
+            var total_price=0;
+            for (const menu_id in cart) {
+                if (Object.hasOwnProperty.call(cart, menu_id)) {
+                    const menu_item = cart[menu_id];
+                    try {
+                        total_items+=menu_item['qty'];
+                    } catch (error) {console.log(error)}
+                    
+                    try {
+                        total_price+=menu_item['price']*menu_item['qty'];
+                    } catch (error) {console.log(error);}
+                    
+                }
+            }
+            document.getElementById('cart_item_number_id').innerText=total_items+" item(s)";
+            document.getElementById('cart_total_price_id').innerText='₹'+total_price;
+            if(total_items===0){
+                document.getElementById('cart_list_id').innerText="No items are added to the cart";
+                document.getElementById('place-order-button-id').className='order-text disabled';
+            }
+            else{
+                document.getElementById('place-order-button-id').className='order-text';
+            }
+        }
+
+        function placeOrder(){
+            console.log("Ordering this:");
+            console.log(cart);
+        }
+    </script>
+
+</head>
+
+<body style="overflow: hidden;">
+    <!-- Part 1: AR View -->
+    <div id="back-to-menu" onclick="openMenu()">
+        <span class="material-icons">arrow_back</span>
+        <div>Menu</div>
+    </div>
+
+    <div id="ar-view-info">
+        <div id="ar-view-info-card">
+            <div id="ar-view-info-text">
+                <div>
+                    <div id="ar-view-info-title">Veg. Pizza</div>
+                    <img id="ar-view-info-veg-nonveg-img" src="./resources/images/veg_symbol.png">
+                    <div id="ar-view-info-desc">Chunky paneer with crisp capsicum and spicy red pepper - quite a mouthful!</div>
+                </div>
+                <div id="ar-view-info-price-button">
+                    <div id="ar-view-info-price">₹150</div>
+                    <div id="ar-view-info-button">
+                        <div class="qty_btn">
+                            <span class="material-icons qty_remove_icon">remove</span>
+                            <div class="qty_text">Add</div>
+                            <span class="material-icons">add</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <img id="ar-view-preview-image" src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60">
+        </div>
+    </div>
+
+    <a-scene vr-mode-ui="enabled: false" color-space="sRGB" renderer="gammaOutput: true"
+    embedded arjs='debugUIEnabled: false; sourceType: webcam; patternRatio: 0.85; trackingMethod: best;'>
+          <a-entity id='userCamera' camera>
+              <a-marker registerevents preset='custom' type='pattern' url="resources\markers\pattern-test_qr.patt" id="M1">
+                  <a-entity rotation="0 0 0" gltf-model="resources\models\hotdog2.glb" id="Model"
+                  scale='0 0 0' animation="property: rotation; to:0 360 0; dur: 10000; easing: linear; loop: true"
+                  animation__2="property: scale; to:0.5 0.5 0.5; dur: 1000 easing: ease-elastic; startEvents: popup;"
+                  animation__3="property: scale; to:0 0 0; dur: 1000 easing: easeInElastic; startEvents: popout;"></a-entity>
+                  <a-video id="Video" scale="1.2 2 1.2" rotation="-90 0 0" opacity="0"></a-video>
+              </a-marker>
+          </a-entity>
+      </a-scene>
+
+    <!-- Part 2: Menu Card -->
+    <!-- Header -->
+    <div class="nav-header" id="nav-header-id">
+        <img src="./resources/images/logo.png">
+    </div>
+
+    <!-- Menu -->
+    <div class="menu-slider" id="menu-slider-id">
+        <div id="menu-bar">
+            <div style="font-weight: bold; font-size: xx-large;">Menu</div>
+        </div>
+        <div class="menu-list" id="menu-list-id"></div>
+        <div style="height: 200px;"></div>
+    </div>
+    <!-- <div id="option-picker" style="position: absolute; z-index: 1; bottom: 0; left: 0; width: 100%; height: 20%; color: red; flex-direction: row; display: flex; overflow: scroll; margin-left: 10px;">
+        <span onclick="image_clicked(0,'resources/models/hotdog2.glb')" style="height:fit-content; margin-left: 12px; margin-right: 12px; border: 3px solid white; border-radius: 20px;"><img style="width:80px;border-radius: 15px;" src="resources\images\hotdog.png"></span>
+        <span onclick="image_clicked(1,'resources/models/turkey_sandwich2.glb')" style="height:fit-content; margin-left: 10px; margin-right: 10px;"><img style="width:80px;border-radius: 15px;" src="resources\images\sandwich.jpg"></span>
+        <span onclick="image_clicked(2,'resources/models/fried_egg_sandwich2.glb')" style="height:fit-content; margin-left: 10px; margin-right: 10px;"><img style="width:80px;border-radius: 15px;" src="resources\images\egg.jpg"></span>
+        <span onclick="image_clicked(3,'resources/videos/pizza1.mp4','video')" style="height:fit-content; margin-left: 10px; margin-right: 10px;"><img style="width:80px;border-radius: 15px;" src="resources\images\pizza.jpg"></span>
+        <span onclick="image_clicked(4,'resources/videos/pancake1.mp4','video')" style="height:fit-content; margin-left: 10px; margin-right: 10px;"><img style="width:80px;border-radius: 15px;" src="resources\images\pancake.jpg"></span>
+    </div> -->
+
+    <!-- Part3: Cart -->
+    <div class="floating_shopping_cart" id="floating_shopping_cart_id">
+        <div class="place_order" onclick="openCart()">
+            <span class="material-icons">shopping_cart</span>
+            <div class="place_order_text">View Cart</div>
+        </div>
+    </div>
+
+    <div class="cart_main" id="cart_main_id">
+        <div class="cart_header" id="cart_header_id" onclick="closeCart()">
+            <div class="close_cart_icon"><span class="material-icons">close</span></div>
+        </div>
+        <div class="cart_body" id="cart_body_id">
+            <div>
+                <div style="height: 45px; padding: 10px; margin-top: 5px; margin-left: 5px; font-weight: bold; font-size: xx-large;">Cart</div>
+                <div class="cart_list" id="cart_list_id">
+                    <!-- <div class="single-option">
+                        <div class="single-option-info-with-img">
+                            <img class="menu-option-img" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGl6emF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60">
+                            <div class="cart-single-option-info">
+                                <div class="single-option-info-title">
+                                    <div>Non Veg. Pizza</div>
+                                    <img class="single-option-veg-nonveg-img" src="./resources/images/non_veg_symbol.png">
+                                </div>
+                                <div class="cart-single-option-add-to-cart">
+                                    <div>Quantity:1</div>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="cart-single-option-price">₹200</div>
+                    </div> -->
+
+                </div>
+            </div>
+            <div class="order-button">
+                <div class="order-summary">
+                    <div>
+                        <div style="font-size: x-large; white-space: nowrap;">Total Price</div>
+                        <div style="text-align: end;" id="cart_item_number_id">1 items</div>
+                    </div>
+                    <div style="font-size: xx-large;margin-left: 20px;" id="cart_total_price_id">₹200</div>
+                </div>
+                <div class="order-text" id="place-order-button-id" onclick="placeOrder()">
+                    <div style="width: max-content; max-height: fit-content; white-space: nowrap;">Place Order</div>
+                    <div><span class="material-icons">arrow_forward</span></div>
+                </div>
+                <div style="height: 20px;"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
