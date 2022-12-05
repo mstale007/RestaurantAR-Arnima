@@ -450,6 +450,39 @@
             background-color: grey;
             pointer-events: none;
         }
+
+        .menu_ui_popup{
+            z-index: 10;
+            position: absolute;
+            left: 0;
+            top: 30%;
+            width: 100%;
+
+            /* display: flex; */
+            justify-content: center;
+            opacity: 0.8;
+            display: none;
+
+            transition: 0.4s;
+        }
+
+        .menu_popup_content{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            background-color: white;
+            padding: 5px;
+            padding-bottom: 25px;
+            border-radius: 10px;
+
+            text-align: center;
+        }
+
+        .popup_img{
+            object-fit: cover;
+            width: 450px;
+        }
     </style>
 
 
@@ -638,6 +671,7 @@
         var selected_item_price="₹150";
         var cart={};
 
+
         window.onload = function() {
             //Load Menu
             
@@ -700,12 +734,22 @@
 
                 marker.addEventListener("markerFound", () => {
                     console.log("Found!!");
+                    document.getElementById("menu_ui_popup_id").style.opacity="0";
+                    setTimeout(function(){
+                        document.getElementById("menu_ui_popup_id").style.display="none";
+                    },500);
+                    
                     document.querySelector("#Model").emit('popup', null, false);
                 });
 
                 marker.addEventListener("markerLost", () => {
                     var markerId = marker.id;
                     console.log('Marker Lost: ', markerId);
+                    document.getElementById("menu_ui_popup_id").style.display="flex";
+                    setTimeout(function(){
+                        document.getElementById("menu_ui_popup_id").style.opacity="1";
+                    },400);
+                    
                     document.querySelector("#Model").emit('popout', null, false);
                 }); 
             },
@@ -748,7 +792,10 @@
             
             document.getElementById("ar-view-info").style.transform = "translateY("+parseInt(ar_view_info_height)+"px)";
             document.getElementById("back-to-menu").style.transform = "translateX(-"+parseInt(back_to_menu_width)+"px)";
-            document.getElementById("menu-bar").setAttribute('onClick', "closeMenu()");
+            // document.getElementById("menu-bar").setAttribute('onClick', "closeMenu()");
+
+            //Popup
+            document.getElementById("menu_ui_popup_id").style.display="none";
 
         }
 
@@ -764,7 +811,10 @@
             document.getElementById("floating_shopping_cart_id").style.transform = "translateX("+parseInt(view_cart_width)+"px)";
             document.getElementById("ar-view-info").style.transform = "unset";
             document.getElementById("back-to-menu").style.transform = "unset";
-            document.getElementById("menu-bar").setAttribute('onClick', "openMenu()");
+            // document.getElementById("menu-bar").setAttribute('onClick', "openMenu()");
+
+            //Popup
+            document.getElementById("menu_ui_popup_id").style.display="flex";
         }
 
         function openNonArView(){
@@ -802,14 +852,14 @@
         }
 
         function openCart(){
-            updateCartItemsUI();
+            // updateCartItemsUI();
             document.getElementById("cart_main_id").style.display = "unset";
             
             setTimeout(()=>{
                 document.getElementById("cart_header_id").style.display="flex";
                 document.getElementById("cart_main_id").style.backgroundColor="rgba(0,0,0,0.5)";
                 document.getElementById("cart_body_id").style.bottom = "0px";
-            },100);
+            },200);
             
             
         }
@@ -1244,6 +1294,14 @@
                 </div>
                 <div style="height: 20px;"></div>
             </div>
+        </div>
+    </div>
+
+    <!-- Part 4: UI popup -->
+    <div class="menu_ui_popup" id="menu_ui_popup_id">
+        <div class="menu_popup_content">
+            <div style="width: 200px; overflow: hidden; display: flex; justify-content: center; height: 200px;align-items: center;"><img class="popup_img" src="./resources/images/qrcode_scan.gif"></div>
+            <div>Scan QR code to continue</div>
         </div>
     </div>
 </body>
