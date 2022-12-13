@@ -32,11 +32,11 @@
             font-size: larger;
             margin-top: 10px;
             
-            box-shadow: 0px 5px 5px 4px whitesmoke;
+            /* box-shadow: 0px 5px 5px 4px whitesmoke; */
             padding: 7.5px;
             border-radius: 5px;
 
-            background: black;
+            background: orange;
             color: white;
         }
 
@@ -54,7 +54,8 @@
             display: flex;
             align-items: center;
             padding: 10px;
-            background-color: white;
+            background-color: black;
+            color: white;
 
             text-indent: 5px;
             border-top-right-radius: 10px;
@@ -119,7 +120,8 @@
         .menu-slider{
             z-index: 20;
             position: absolute;
-            background-color: white;
+            background-color: black;
+            color: white;
             width: 100%;
             height: 90%;
             bottom: 0px;
@@ -188,9 +190,9 @@
             justify-content: space-evenly;
             font-size: medium;
 
-            border: 2px solid green;
+            border: 2px solid orangered;
             padding: 5px;
-            color: green;
+            color: orangered;
             border-radius: 10px;
 
             width: 60px;
@@ -228,7 +230,8 @@
 
         #ar-view-info-card{
             width: 100%;
-            background-color: white;
+            background-color: black;
+            color: white;
             border-top-left-radius: 30px;
             border-top-right-radius: 30px;
 
@@ -284,9 +287,9 @@
             display: flex;
             align-items: center;
             font-size: medium;
-            border: 2px solid green;
+            border: 2px solid orangered;
             padding: 5px;
-            color: green;
+            color: orangered;
 
             font-size: 18px;
             border-radius: 10px;
@@ -309,7 +312,7 @@
             margin-right: 0px;
             padding: 15px;
             color: white;
-            background-color: black;
+            background-color: orange;
 
             display: flex;
             align-items: center;
@@ -370,7 +373,8 @@
             height: 70%;
             width: 100%;
 
-            background-color: white;
+            background-color: black;
+            color: white;
             border-top-left-radius: 20px;
             border-top-right-radius: 20px;
 
@@ -551,27 +555,27 @@
                 {
                     "id":"id6",
                     "type":"model",
-                    "name":"Spring Roll",
+                    "name":"Grill Sandwhich",
                     "price":210,
-                    "category":"Chinese",
-                    "description":"Spring rolls are rolled appetizers or dim sum commonly found in Chinese and other Southeast Asian cuisines.",
-                    "model_link":"resources/models/hotdog2.glb",
-                    "preview_image":"https://productimages.withfloats.com/actual/624038417e882f0001e2fba6.jpg",
+                    "category":"Breakfast",
+                    "description":"Try new fillings and toppings for your sandwiches, wraps and buns. Our next level sarnies include classic club sandwiches, baguettes and picnic favourites.",
+                    "model_link":"resources/models/sandwitch.glb",
+                    "preview_image":"https://images.unsplash.com/photo-1539252554453-80ab65ce3586",
                     "food_category":"veg",
-                    "ar_enabled":false
+                    "ar_enabled":true
                 },
                 {
                     "id":"id7",
                     "type":"model",
-                    "name":"Dumplings",
+                    "name":"Chicken Wrap",
                     "price":270,
-                    "category":"Chinese",
-                    "description":"First, there's the Double Quarter Pounder with Cheese (QPC). Now, there's still the Double QPC—but with smoky sauce and bacon.",
-                    "model_link":"resources/models/fried_egg_sandwich2.glb",
-                    "preview_image":"https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Xiaolongbao-breakfast.jpg/640px-Xiaolongbao-breakfast.jpg",
+                    "category":"Breakfast",
+                    "description":"It's a wrap! A speedy supper with plenty of spice that's low in calories - the perfect midweek meal",
+                    "model_link":"resources/models/wrap.glb",
+                    "preview_image":"https://images.unsplash.com/photo-1562059390-a761a084768e",
                     "food_category":"non_veg",
-                    "ar_enabled":false
-                }, 
+                    "ar_enabled":true
+                },
         ];
         var data = {
             "Pizza Mania":[
@@ -585,7 +589,7 @@
                     "model_link":"resources/models/hotdog2.glb",
                     "preview_image":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
                     "food_category":"veg",
-                    "ar_enabled":true
+                    "ar_enabled":false
                 },
                 {
                     "id":"id2",
@@ -597,7 +601,7 @@
                     "model_link":"resources/models/fried_egg_sandwich2.glb",
                     "preview_image":"https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGl6emF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
                     "food_category":"non_veg",
-                    "ar_enabled":true
+                    "ar_enabled":false
                 },
                 {
                     "id":"id3",
@@ -623,7 +627,7 @@
                     "model_link":"resources/models/hotdog2.glb",
                     "preview_image":"https://images.unsplash.com/photo-1550547660-d9450f859349",
                     "food_category":"veg",
-                    "ar_enabled":true
+                    "ar_enabled":false
                 },
                 {
                     "id":"id5",
@@ -638,32 +642,33 @@
                     "ar_enabled":false
                 },
             ],
-            "Chinese":[
+            "Breakfast":[
                 {
                     "id":"id6",
                     "type":"model",
-                    "name":"Spring Roll",
+                    "name":"Grill Sandwhich",
                     "price":210,
-                    "category":"Chinese",
-                    "description":"Spring rolls are rolled appetizers or dim sum commonly found in Chinese and other Southeast Asian cuisines.",
-                    "model_link":"resources/models/hotdog2.glb",
-                    "preview_image":"https://productimages.withfloats.com/actual/624038417e882f0001e2fba6.jpg",
+                    "category":"Breakfast",
+                    "description":"Try new fillings and toppings for your sandwiches, wraps and buns. Our next level sarnies include classic club sandwiches, baguettes and picnic favourites.",
+                    "model_link":"resources/models/sandwitch.glb",
+                    "preview_image":"https://images.unsplash.com/photo-1539252554453-80ab65ce3586",
                     "food_category":"veg",
-                    "ar_enabled":false
+                    "ar_enabled":true
                 },
                 {
                     "id":"id7",
                     "type":"model",
-                    "name":"Dumplings",
+                    "name":"Chicken Wrap",
                     "price":270,
-                    "category":"Chinese",
-                    "description":"First, there's the Double Quarter Pounder with Cheese (QPC). Now, there's still the Double QPC—but with smoky sauce and bacon.",
-                    "model_link":"resources/models/fried_egg_sandwich2.glb",
-                    "preview_image":"https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Xiaolongbao-breakfast.jpg/640px-Xiaolongbao-breakfast.jpg",
+                    "category":"Breakfast",
+                    "description":"It's a wrap! A speedy supper with plenty of spice that's low in calories - the perfect midweek meal",
+                    "model_link":"resources/models/wrap.glb",
+                    "preview_image":"https://images.unsplash.com/photo-1562059390-a761a084768e",
                     "food_category":"non_veg",
-                    "ar_enabled":false
+                    "ar_enabled":true
                 },
-            ]
+            ],
+            
         }
         var nav_closed = false;
         var selected_item_name="Veg. Pizza";
@@ -852,7 +857,7 @@
         }
 
         function openCart(){
-            // updateCartItemsUI();
+            updateCartItemsUI();
             document.getElementById("cart_main_id").style.display = "unset";
             
             setTimeout(()=>{
@@ -1212,12 +1217,16 @@
     </div>
 
     <a-scene vr-mode-ui="enabled: false" color-space="sRGB" renderer="gammaOutput: true"
-    embedded arjs='debugUIEnabled: false; sourceType: webcam; patternRatio: 0.85; trackingMethod: best;'>
+    embedded arjs='debugUIEnabled: false; sourceType: webcam; patternRatio: 0.85; trackingMethod: best;' renderer="antialias: false; logarithmicDepthBuffer:true; precision:'low'">
           <a-entity id='userCamera' camera>
               <a-marker registerevents preset='custom' type='pattern' url="resources\markers\pattern-test_qr.patt" id="M1">
-                  <a-entity rotation="0 0 0" gltf-model="resources\models\hotdog2.glb" id="Model"
+                  <!-- <a-entity rotation="0 0 0" gltf-model="resources\models\hotdog2.glb" id="Model"
                   scale='0 0 0' animation="property: rotation; to:0 360 0; dur: 10000; easing: linear; loop: true"
-                  animation__2="property: scale; to:0.5 0.5 0.5; dur: 1000 easing: ease-elastic; startEvents: popup;"
+                  animation__2="property: scale; to:1 1 1; dur: 1000 easing: ease-elastic; startEvents: popup;"
+                  animation__3="property: scale; to:0 0 0; dur: 1000 easing: easeInElastic; startEvents: popout;"></a-entity> -->
+                  <a-entity rotation="0 0 0" gltf-model="resources\models\hotdog2.glb" id="Model"
+                  scale='0 0 0'
+                  animation__2="property: scale; to:1 1 1; dur: 1000 easing: ease-elastic; startEvents: popup;"
                   animation__3="property: scale; to:0 0 0; dur: 1000 easing: easeInElastic; startEvents: popout;"></a-entity>
                   <a-video id="Video" scale="1.2 2 1.2" rotation="-90 0 0" opacity="0"></a-video>
               </a-marker>
